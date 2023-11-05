@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponse } from 'src/app/interfaces/api-response';
@@ -11,6 +12,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent {
+  // Boolean to check server is running
+  isServerUp: boolean = false;
   // Boolean flag to determine whether the user is in login or registration mode
   isLogin: boolean = true;
 
@@ -22,11 +25,21 @@ export class AuthComponent {
   lastName: string = '';
   email: string = '';
 
-  constructor(private userService: UserService, private router: Router) {
-    // Check if the user is already logged in, and if so, redirect to the chat page
-    if (localStorage.getItem('user') != null) {
-      this.router.navigate(['chat']);
-    }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    http: HttpClient
+  ) {
+    http
+      .get('https://chatapp-gapl.onrender.com/user/all')
+      .subscribe((res: any) => {
+        console.log('Server boots up..');
+        this.isServerUp = true;
+        // Check if the user is already logged in, and if so, redirect to the chat page
+        if (localStorage.getItem('user') != null) {
+          this.router.navigate(['chat']);
+        }
+      });
   }
 
   // Toggle between login and registration modes

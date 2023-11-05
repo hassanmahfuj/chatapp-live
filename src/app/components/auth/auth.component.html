@@ -1,11 +1,46 @@
-<div class="d-flex align-items-center py-4 bg-login vh-100">
-  <main class="form-signin w-100 m-auto">
+<div
+  class="d-flex align-items-center justify-content-center py-4 bg-login vh-100"
+>
+  <div *ngIf="!isServerUp" class="d-flex flex-column align-items-center">
+    <div id="container">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <filter id="shadow">
+            <feDropShadow
+              dx="0"
+              dy="0"
+              stdDeviation="1.5"
+              flood-color="rgb(0, 140, 235)"
+            />
+          </filter>
+        </defs>
+        <circle
+          id="spinner"
+          style="
+            fill: transparent;
+            stroke: rgb(0, 140, 235);
+            stroke-width: 7px;
+            stroke-linecap: round;
+            filter: url(#shadow);
+          "
+          cx="50"
+          cy="50"
+          r="45"
+        />
+      </svg>
+    </div>
+    <p class="p-3 text-center">
+      Server is booting up.. <br />
+      Please wait it takes a few minutes.
+    </p>
+  </div>
+  <main *ngIf="isServerUp" class="form-signin w-100 m-auto">
     <!-- Login Form -->
     <div class="row p-2 bg-white rounded" *ngIf="isLogin">
-      <div class="col-6">
-        <img class="img-cover" src="../../../assets/login-cover.jpg" />
+      <div class="col-sm-6">
+        <img class="img-cover" src="assets/login-cover.jpg" />
       </div>
-      <div class="col-6 d-flex justify-content-center align-items-center">
+      <div class="col-sm-6 d-flex justify-content-center align-items-center">
         <form class="w-100" (ngSubmit)="onUserLogin()" novalidate #f1="ngForm">
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
           <div class="form-floating">
@@ -49,10 +84,10 @@
 
     <!-- Registration Form -->
     <div class="row p-2 bg-white rounded" *ngIf="!isLogin">
-      <div class="col-6">
-        <img class="img-cover" src="../../../assets/register-cover.jpg" />
+      <div class="col-sm-6">
+        <img class="img-cover" src="assets/register-cover.jpg" />
       </div>
-      <div class="col-6 d-flex justify-content-center align-items-center">
+      <div class="col-sm-6 d-flex justify-content-center align-items-center">
         <form
           class="w-100 py-3"
           (ngSubmit)="onUserRegister()"
